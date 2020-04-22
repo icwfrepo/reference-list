@@ -14,12 +14,13 @@ Referenced often, Updated simi-regularly :)
 	2. [Handy Sites](#macos_sites)
 	3. [Handy Terminal Commands](#macos_commands)
 	4. [Documentation](#macos_documentation)
-	5. [Apple Device Automation](#apple_device_automation)
-	6. [Networking & Wi-Fi](#macos_network_and_wifi)
-	7. [Security](#macos_security)
-	8. [Encryption & FileVault](#macos_encryption_and_fv)
-	9. [Apple Device Automation](#apple_device_automation)
-	10. [Support](#apple_support)
+	   1. [MDM Protocol](#appls_mdm_protocol)
+	5. [Networking & Wi-Fi](#macos_network_and_wifi)
+	6. [Security](#macos_security)
+	7. [Encryption & FileVault](#macos_encryption_and_fv)
+	8. [Application Deployment](#apple_app_deployment)
+	8. [Apple Device Automation](#apple_device_automation)
+	9. [Support](#apple_support)
 
 1. [Unix & GNU/Linux](#unix_linux)
 1. [Windows](#windows)
@@ -28,6 +29,7 @@ Referenced often, Updated simi-regularly :)
     2. MSFT Office
     3. Active Directory/AzureAD/LDAP
     4. OIDC & Microsoft Identity Platform
+    5. [Conditional Access with Intune](#msft_conditional_access)
     5. SCCM Administration
     6. Image Creation
     7. Handy Commands
@@ -38,6 +40,7 @@ Referenced often, Updated simi-regularly :)
 
 	1. [Apple](#mdm_apple_apns)
 	1. [Jamf](#mdm_jamf)
+	2. [Addigy](#mdm_addigy)
 	2. [WorkspaceONE](#mdm_wso)
 	3. [MSFT Device Manager](#mdm_msft_device_manager)
 	3. [Mobile Iron](#mdm_mobile_iron)
@@ -91,7 +94,8 @@ Referenced often, Updated simi-regularly :)
 
 - [AutoPkg](https://autopkg.github.io/autopkg/) - AutoPkg is a system for automatically preparing software for distribution to managed clients. Recipes allow you to specify a series of simple actions which combined together can perform complex tasks, similar to Automator workflows or Unix pipes.
 
-	- [recipe-robot](https://github.com/homebysix/recipe-robot): help create AutoPkg 
+    - [GitHub Repo](https://github.com/autopkg/autopkg) 
+    - [recipe-robot](https://github.com/homebysix/recipe-robot): help create AutoPkg 
 recipes.
 
 - [Suspicious Package](http://www.mothersruin.com/software/SuspiciousPackage/get.html): look inside of packages. 
@@ -123,7 +127,8 @@ recipes.
 - [InstallApplications](https://github.com/erikng/installapplications):
     dynamically download packages for use with `InstallApplication` 
 - [Recipe Robot](https://github.com/homebysix/recipe-robot) - Recipe Robot is the easiest way to create new AutoPkg recipes for simple Mac apps.
-- [vfuse](https://github.com/chilcote/vfuse) - Takes a never-booted DMG and converts it to a VMware Fusion VM.    
+- [vfuse](https://github.com/chilcote/vfuse) - Takes a never-booted DMG and converts it to a VMware Fusion VM.
+- [xmlAutomator](https://github.com/moofit/xmlAutomator) - Tool set created by MoofIT for manipulating `.plist` and `.mobileconfig` files. I mainly use it to unsign `.mobileconfig` files.    
 
 <a name="macos_sites"></a> 
 
@@ -229,6 +234,8 @@ recipes.
 
 ### Documentation
 
+- [Developer Documentation](https://developer.apple.com/documentation)
+
 #### Apple KBs
 
 - [HT201407 - If you can't activate your iPhone](https://support.apple.com/en-us/HT201407)
@@ -250,6 +257,27 @@ recipes.
 - [Kerberos Extension](https://developer.apple.com/documentation/devicemanagement/extensiblesinglesignonkerberos/extensiondata)
 - [System Extensions](https://developer.apple.com/system-extensions/)
 
+<a name="appls_mdm_protocol"></a>
+
+#### MDM Protocol Related
+
+- [Apple MDM Documentation](https://developer.apple.com/library/content/documentation/Miscellaneous/Reference/MobileDeviceManagementProtocolRef/3-MDM_Protocol/MDM_Protocol.html#//apple_ref/doc/uid/TP40017387-CH3-SW2)
+- [Configuration Profile Reference](https://developer.apple.com/business/documentation/Configuration-Profile-Reference.pdf)
+- [Apple Profile Manager](http://help.apple.com/profilemanager/mac/5.4/#/apd5BD57F16-A2BF-43B9-AB4B-24948FB52C1E)
+- [Apple Configurator 2](http://help.apple.com/configurator/mac/2.0/)
+- [MacOS Deployment Reference](https://help.apple.com/deployment/macos/#/ior5d40635d0)
+- Managing macOS Notifications
+    
+    - In the User's `~/Library/Preferences`
+    - Plist: `com.apple.ncprefs.plist`
+    - Look at previously answered prompts with
+
+        ```
+        sqlite3 "$(getconf DARWIN_USER_DIR)/com.apple.notificationcenter/db2/db" "select * from app;"
+        ```
+    
+    - [Mr Macintosh](https://mrmacintosh.com/how-to-manage-catalinas-new-application-notifications-with-a-profile/)
+
 
 #### Other
 
@@ -268,15 +296,6 @@ recipes.
 - [Apple software Restore (ASR)](https://en.wikipedia.org/wiki/Apple_Software_Restore)
 - [Disabled Accounts](https://www.jamf.com/jamf-nation/discussions/18243/password-policy-profile-disables-user-account)
 - [Setting Printer Options Via CLI](http://www.brunerd.com/blog/2012/03/13/getting-and-setting-ppd-options-via-command-line-for-use-with-lpadmin-in-os-x/)
-
-
-#### MDM Protocol Related
-
-- [Apple MDM Documentation](https://developer.apple.com/library/content/documentation/Miscellaneous/Reference/MobileDeviceManagementProtocolRef/3-MDM_Protocol/MDM_Protocol.html#//apple_ref/doc/uid/TP40017387-CH3-SW2)
-- [Configuration Profile Reference](https://developer.apple.com/business/documentation/Configuration-Profile-Reference.pdf)
-- [Apple Profile Manager](http://help.apple.com/profilemanager/mac/5.4/#/apd5BD57F16-A2BF-43B9-AB4B-24948FB52C1E)
-- [Apple Configurator 2](http://help.apple.com/configurator/mac/2.0/)
-- [MacOS Deployment Reference](https://help.apple.com/deployment/macos/#/ior5d40635d0)
 
 
 ### Apple Business Manager
@@ -345,6 +364,13 @@ Please send any comments to 800-179comments@nist.gov.
 - [Manage FileVault with `fdesetup`](https://derflounder.wordpress.com/2015/12/20/managing-el-capitans-filevault-2-with-fdesetup/)
 - [FileVault Institutional Recovery Keys - DerFlounder](https://derflounder.wordpress.com/2014/08/13/filevault-2-institutional-recovery-keys-creation-deployment-and-use/)
 
+<a name="apple_app_deployment"></a>
+
+### Application Deployment
+
+- [Firefox Preferences](https://github.com/mozilla/policy-templates/blob/a46ede82219f2cf58364c13fb434e30670dcd257/README.md)
+- [Symantec Endpoint Protection client Mac compatibility](https://knowledge.broadcom.com/external/article/152316/mac-compatibility-with-the-endpoint-prot.html)
+
 
 <a name="apple_device_automation"></a>
 
@@ -359,6 +385,12 @@ Please send any comments to 800-179comments@nist.gov.
 - Device STUB File Location
 
 	`$HOME/Library/Caches/com.apple.configurator.AttachedDevices`
+
+- Blueprint file location
+    
+    ```
+    /Users/<username>/Library/Group Containers/K36BKF7T3D.group.com.apple.configurator/Library/Application Support/com.apple.configurator/Blueprints
+    ```
 
 
 <a name="apple_support"></a>
@@ -413,6 +445,10 @@ Please send any comments to 800-179comments@nist.gov.
 
 ### MSFT Office
 
+- AutoUpdator Location
+
+    `/Library/Application\ Support/Microsoft/MAU2.0`
+
 - [Change Native Language](https://www.jamf.com/jamf-nation/discussions/25722/changing-languages-in-office-2016)
 
 	```shell
@@ -461,7 +497,14 @@ Please send any comments to 800-179comments@nist.gov.
 - [Microsoft identity platform and OpenID Connect protocol](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc)
 
 
-\[[top](#top)]
+<a name="msft_conditional_access"></a>
+
+### Conditional Access
+
+- [MSFT Doc: Enforcing Conditional Access](https://docs.microsoft.com/en-us/mem/intune/protect/conditional-access-assign-jamf)
+- Only applies to AAD User groups
+- [MSFT Doc: Troubleshooting](https://docs.microsoft.com/en-us/mem/intune/protect/troubleshoot-jamf)
+
 
 ### SCCM Administration
 
@@ -652,11 +695,9 @@ https://jamf.it/dep-debug
 
 - [Conditional Access and Why it Matters](https://www.jamf.com/products/jamf-pro/microsoft/)
 - [Intune Integration - Traveling Tech Guy](https://travellingtechguy.eu/jamf-pro-and-ms-azure-intune-for-macos/)
-- [Integrating with Microsoft Intune to Enforce Compliance on Mac Computers Managed by Jamf Pro](https://docs.jamf.com/technical-papers/jamf-pro/microsoft-intune/10.17.0/Introduction.html)
-- [Conditional Access with Azure](https://resources.jamf.com/documents/white-papers/conditional-access-going-beyond-perimeter-based-security.pdf)
-- [MSFT Doc: Enforcing Conditional Access](https://docs.microsoft.com/en-us/mem/intune/protect/conditional-access-assign-jamf)
+- [Jamf Doc: Integrating with Microsoft Intune to Enforce Compliance on Mac Computers Managed by Jamf Pro](https://docs.jamf.com/technical-papers/jamf-pro/microsoft-intune/10.17.0/Introduction.html)
+- [Jamf Doc: Conditional Access with Azure](https://resources.jamf.com/documents/white-papers/conditional-access-going-beyond-perimeter-based-security.pdf)
 - Only applies to AAD User groups
-- [MSFT Doc: Troubleshooting](https://docs.microsoft.com/en-us/mem/intune/protect/troubleshoot-jamf)
 
 
 
@@ -876,7 +917,7 @@ https://jamf.it/dep-debug
 
 - Jamf Protect
     
-    - [YouTube: Introduction to Protect](https://www.youtube.com/watch?v=gsbfkCSjwxc&t=1s)`
+    - [YouTube: Introduction to Protect](https://www.youtube.com/watch?v=gsbfkCSjwxc&t=1s)
     - [Product Page](https://www.jamf.com/products/jamf-protect/)
     - [Admin Guide](https://docs.jamf.com/jamf-protect/administrator-guide/Preface.html)
     - [Evaluation Guide]( https://docs.jamf.com/jamf-protect/evaluation-guide/Overview.html)
@@ -903,7 +944,15 @@ https://jamf.it/dep-debug
 - [Composer User Guide](https://www.jamf.com/resources/product-documentation/composer-user-guide/)
 
 
-<a name=“mdm_wso”></a>
+<a name="mdm_addigy"></a>
+
+### Addigy
+
+- [Docs](support.addigy.com)
+
+
+<a name="mdm_wso"></a>
+
 ### Workspace ONE
 
 - [MacOS Samples](https://github.com/vmware-samples/euc-samples/tree/master/macOS-Samples)
@@ -950,14 +999,15 @@ https://jamf.it/dep-debug
 
 - [Workspace ONE Validation Analyzer](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/9.4/vmware-airwatch-guides-94/GUID-AW94-ValidationTool.html)
 - [Workspace ONE Provisioning Tool](https://labs.vmware.com/flings/vmware-workspace-one-provisioning-tool)
+- [WorkspaceONE Mobileconfig Importer](https://flings.vmware.com/workspace-one-mobileconfig-importer)
 
 
-<a name=“mdm_msft_device_manager”></a>
+<a name="mdm_msft_device_manager"></a>
 ### MSFT Device Manager
 
 - [REST API](https://docs.microsoft.com/en-us/rest/api/azure/)
 
-<a name=“mdm_mobile_iron”></a>
+<a name="mdm_mobile_iron"></a>
 ### Mobile Iron
 
 
@@ -1373,8 +1423,10 @@ The Mac does not have the necessary developer tools installed.
 - [Python Naming Conventions](http://visualgit.readthedocs.io/en/latest/pages/naming_convention.html)
 - [Built-in Exceptions](https://docs.python.org/3/library/exceptions.html#os-exceptions)
 - [Requests Module](http://docs.python-requests.org/en/master/user/quickstart/#more-complicated-post-requests) - API Manipulation - `sudo pip install requests`
-	- [HTTP Status codes](https://github.com/requests/requests/blob/master/requests/status_codes.py)
-	- [Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)	
+
+    - [Requests: Status Codes](https://github.com/psf/requests/blob/master/requests/status_codes.py) 
+    - [HTTP Status codes](https://github.com/requests/requests/blob/master/requests/status_codes.py)
+    - [Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)	
 - [python ldap module](https://www.python-ldap.org/en/latest/bytes_mode.html#porting-recommendations) - `pip install python-ldap`
 - [Send emails](https://realpython.com/python-send-email/)
 - [RealPython.com](https://realpython.com)
@@ -1705,6 +1757,13 @@ atom-text-editor.editor .selection .region {
 ### sed
 
 -   [Learn Sed](http://www.grymoire.com/Unix/Sed.html)
+
+
+### API Documentation
+
+- [Swagger Documenation](https://swagger.io/docs/specification/2-0/what-is-swagger/)
+- [Swagger: Bearer Token](https://swagger.io/docs/specification/authentication/bearer-authentication/)
+
 
 ## Software
 
